@@ -34,6 +34,7 @@ function logout() {
 }
 
 function handleResponse(response) {
+    console.log(response);
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
@@ -52,10 +53,12 @@ function handleResponse(response) {
 
 
 function shortener(url) {
+    let headers = { 'Content-Type': 'application/json'};
+    headers["Authorization"] = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjoxNTc1MTAwNDQzLCJpYXQiOjE1NzQ2Njg0NDN9.zEqfskNZRzCcQdoBANxj7buxFR3rlMhwBlcHSj75UsVIuFg6qOUwgzg7jcOjjNBXzD5z7UjhnDaIL1aE9djQmA';
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization' : localStorage.getItem("token") },
-        body: JSON.stringify({ url })
+        headers: headers,
+        body: JSON.stringify({ "url" : url })
     };
 
     return fetch(`${apiUrl}/shortener`, requestOptions)
